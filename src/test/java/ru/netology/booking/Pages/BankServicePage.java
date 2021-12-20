@@ -18,7 +18,7 @@ public class BankServicePage {
     Faker faker = new Faker();
 
 
-    public Dashboard validLogin(DataHelper.CardInfo info) {
+    public Dashboard successfulOrder(DataHelper.CardInfo info) {
         cardNumber.setValue(info.getCardNumber());
         cvc.setValue(String.valueOf(info.getCvc()));
         date.setValue(info.getDate());
