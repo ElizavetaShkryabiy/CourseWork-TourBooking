@@ -177,11 +177,29 @@ public class BookingTest {
     }
 
     @Test
+    void shouldGiveErrorForZerosInYear() {
+        var choosePage = open("http://localhost:8080", Dashboard.class);
+        var servicePage = choosePage.depositClick();
+        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
+        servicePage.inValidDateCardInfo(month, "00");
+//        Check.checkInfo(cardInfo);
+    }
+
+    @Test
     void shouldGiveErrorForNotExistingMonth() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.inValidDateCardInfo(notExistingMonth, year);
+//        Check.checkInfo(cardInfo);
+    }
+
+    @Test
+    void shouldGiveErrorForZerosInMonth() {
+        var choosePage = open("http://localhost:8080", Dashboard.class);
+        var servicePage = choosePage.depositClick();
+        var year = DataHelper.getRandomCard().getDateYear();
+        servicePage.inValidDateCardInfo("00", year);
 //        Check.checkInfo(cardInfo);
     }
 
