@@ -5,7 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 
 public class Dashboard {
-    private SelenideElement loginButton = $("[data-test-id=action-login]");
+    private SelenideElement loginButton = $(".button",1);
     public BankServicePage depositClick() {
         loginButton.click();
         return new BankServicePage();
