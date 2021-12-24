@@ -1,26 +1,40 @@
 package ru.netology.booking.checkSQL;
 
-import lombok.*;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import ru.netology.booking.Data.DataHelper;
-
-import java.sql.DriverManager;
+import static io.restassured.RestAssured.given;
 
 public class Check {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/app";
-    static final String USER = "app";
-    static final String PASS = "pass";
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    public static class SuccessInfo {
-        private String status;
+    public Check(){}
+    public void checkAllOk() {
+        given()
+                .baseUri("http://185.119.57.197:9999")
+                .when()
+                .get("/payment")
+                .then()
+                .statusCode(200)
+                .statusLine("APPROVED")
+        ;
     }
-//
-//    @SneakyThrows
-//    public static SuccessInfo checkInfo() {
-//
-//    }
+
+    public void checkCardDeclined() {
+        given()
+                .baseUri("http://185.119.57.197:9999")
+                .when()
+                .get("/payment")
+                .then()
+                .statusCode(200)
+                .statusLine("DECLINED")
+        ;
+    }
+
+    public void checkInvalidCard() {
+        given()
+                .baseUri("http://185.119.57.197:9999")
+                .when()
+                .get("/payment")
+                .then()
+                .statusCode(500)
+        ;
+    }
+
+
 }

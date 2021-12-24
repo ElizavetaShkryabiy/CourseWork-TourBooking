@@ -3,6 +3,7 @@ package ru.netology.booking.Pages;
 import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
 import ru.netology.booking.Data.DataHelper;
+import ru.netology.booking.checkSQL.Check;
 
 import java.time.Duration;
 
@@ -17,7 +18,7 @@ public class BankServicePage {
     private SelenideElement owner = $(".input__control", 3);
     private SelenideElement cvc = $(".input__control", 4);
     private SelenideElement orderButton = $(".button", 2);
-    Faker faker = new Faker();
+    Check checkInfo = new Check();
 
 
     public void successfulOrder() {
@@ -30,6 +31,7 @@ public class BankServicePage {
         orderButton.click();
         $(".notification").shouldBe(appear, Duration.ofSeconds(15))
                 .shouldHave(text("Операция одобрена банком"));
+        checkInfo.checkAllOk();
     }
 
     public void declinedOrder() {
@@ -43,6 +45,7 @@ public class BankServicePage {
         $(".notification").shouldBe(appear, Duration.ofSeconds(30))
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
+        checkInfo.checkCardDeclined();
     }
 
     public void inValidCardNumberOrder(String number) {
@@ -55,6 +58,7 @@ public class BankServicePage {
         $(".notification").shouldBe(appear, Duration.ofSeconds(30))
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
+        checkInfo.checkInvalidCard();
 
     }
 
@@ -121,6 +125,7 @@ public class BankServicePage {
         orderButton.click();
         $(".notification").shouldBe(appear, Duration.ofSeconds(15))
                 .shouldHave(text("Операция одобрена банком"));
+        checkInfo.checkAllOk();
     }
 
     public void emptyField(String number, String month, String year, String ownerName, String cvcNumber) {
@@ -169,5 +174,6 @@ public class BankServicePage {
         orderButton.click();
         $(".notification").shouldBe(appear, Duration.ofSeconds(15))
                 .shouldHave(text("Операция одобрена банком"));
+        checkInfo.checkAllOk();
     }
 }

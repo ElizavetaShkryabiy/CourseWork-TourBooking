@@ -1,18 +1,14 @@
 package ru.netology.booking.Test;
 
 import com.github.javafaker.Faker;
-import lombok.SneakyThrows;
 import lombok.var;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.netology.booking.Data.DataHelper;
 import ru.netology.booking.Pages.Dashboard;
-import ru.netology.booking.checkSQL.Check;
-
 import java.time.LocalDate;
 import java.util.Locale;
-
 import static com.codeborne.selenide.Selenide.open;
 
 public class BookingTest {
@@ -48,7 +44,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.successfulOrder();
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -56,7 +51,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.declinedOrder();
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -64,7 +58,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidCardNumberOrder(DataHelper.getRandomCard().getCardNumber());
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -72,7 +65,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidCardNumberFormat(randomShortCardNumber);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -85,7 +77,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -97,7 +88,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(lettersRu, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -109,7 +99,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(lettersSymbols, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -122,7 +111,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -130,7 +118,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidCardNumberOrder(randomTooLongCardNumber);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -138,7 +125,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidDateCardInfo(previousMonth, thisYear);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -146,7 +132,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.overdueCardDate(pastDateYear);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -155,7 +140,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.inValidDateCardInfo(month, farFutureDateYear);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -164,7 +148,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.inValidDateCardInfo(randomShortCardNumber, year);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -173,7 +156,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.inValidDateCardInfo(month, randomShortCardNumber);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -181,8 +163,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.inValidDateCardInfo(month, "00");
-//        Check.checkInfo(cardInfo);
+        servicePage.overdueCardDate("00");
     }
 
     @Test
@@ -191,7 +172,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.inValidDateCardInfo(notExistingMonth, year);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -200,7 +180,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.inValidDateCardInfo("00", year);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -212,7 +191,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.emptyField(number, month, DataHelper.getRandomCard().getOwner(), owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -224,7 +202,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.emptyField(number, DataHelper.getRandomCard().getOwner(), year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -236,7 +213,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.emptyField(number, month, lettersRu, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -248,7 +224,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.emptyField(number, lettersRu, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -260,7 +235,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.emptyField(number, month, lettersSymbols, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -272,7 +246,6 @@ public class BookingTest {
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         var year = DataHelper.getRandomCard().getDateYear();
         servicePage.emptyField(number, lettersSymbols, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -285,7 +258,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -298,7 +270,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -306,7 +277,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidCVCFormat(randomShortCvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -314,7 +284,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.longCVC(randomTooLongCvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -326,7 +295,6 @@ public class BookingTest {
         var year = DataHelper.getApprovedCardInfo().getDateYear();
         String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
         servicePage.emptyField(number, month, year, owner, DataHelper.getRandomCard().getOwner());
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -338,7 +306,6 @@ public class BookingTest {
         var year = DataHelper.getApprovedCardInfo().getDateYear();
         var owner = DataHelper.getRandomCard().getOwner();
         servicePage.emptyField(number, month, year, owner, lettersRu);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -350,7 +317,6 @@ public class BookingTest {
         var year = DataHelper.getApprovedCardInfo().getDateYear();
         var owner = DataHelper.getRandomCard().getOwner();
         servicePage.emptyField(number, month, year, owner, lettersSymbols);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -363,7 +329,6 @@ public class BookingTest {
         var owner = DataHelper.getRandomCard().getOwner();
         String cvc = "";
         servicePage.emptyField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
 
@@ -377,7 +342,6 @@ public class BookingTest {
         var owner = "";
         String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
         servicePage.emptyOwnerField(number, month, year, owner, cvc);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -386,7 +350,6 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         var owner = DataHelper.getApprovedCardInfo().getCardNumber();
         servicePage.validOwnerFormat(owner);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -394,7 +357,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidOwnerFormat(lettersSymbols);
-//        Check.checkInfo(cardInfo);
     }
 
     @Test
@@ -402,7 +364,6 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         servicePage.inValidOwnerFormat(lettersRu);
-//        Check.checkInfo(cardInfo);
     }
 
 }

@@ -31,6 +31,8 @@ dependencies {
     testImplementation 'com.codeborne:selenide:5.19.0'
     testImplementation 'com.github.javafaker:javafaker:1.0.1'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
+    testImplementation 'io.rest-assured:rest-assured:4.3.0'
+    testImplementation 'io.rest-assured:json-schema-validator:4.3.1'
 }
 
 test {
