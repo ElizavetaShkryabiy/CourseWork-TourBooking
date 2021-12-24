@@ -2,8 +2,6 @@ package ru.netology.booking.Test;
 
 import com.github.javafaker.Faker;
 import lombok.var;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.netology.booking.Data.DataHelper;
 import ru.netology.booking.Pages.Dashboard;
@@ -26,18 +24,6 @@ public class BookingTest {
     String randomTooLongCvc = String.valueOf(Integer.parseInt(faker.number().digits(4)));
     String lettersRu = fakerRu.name().fullName();
     String lettersSymbols = "*^%%#%$^(*&^&^%$%^#";
-
-
-    //    @BeforeAll
-//    static void setUpAll() {
-//        SelenideLogger.addListener("allure", new AllureSelenide());
-//    }
-//
-//    @AfterAll
-//    static void tearDownAll() {
-//        SelenideLogger.removeListener("allure");
-//    }
-
 
     @Test
     void shouldOrderSuccessfully() {
