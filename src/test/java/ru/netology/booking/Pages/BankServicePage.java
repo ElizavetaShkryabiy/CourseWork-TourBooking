@@ -1,7 +1,6 @@
 package ru.netology.booking.Pages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.github.javafaker.Faker;
 import ru.netology.booking.Data.DataHelper;
 import ru.netology.booking.checkSQL.Check;
 
@@ -29,7 +28,7 @@ public class BankServicePage {
         owner.setValue(info.getOwner());
         cvc.setValue(String.valueOf(info.getCvc()));
         orderButton.click();
-        $(".notification").shouldBe(appear, Duration.ofSeconds(15))
+        $(".notification").shouldBe(appear, Duration.ofSeconds(20))
                 .shouldHave(text("Операция одобрена банком"));
         checkInfo.checkAllOk();
     }
@@ -58,7 +57,6 @@ public class BankServicePage {
         $(".notification").shouldBe(appear, Duration.ofSeconds(30))
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
-        checkInfo.checkInvalidCard();
 
     }
 

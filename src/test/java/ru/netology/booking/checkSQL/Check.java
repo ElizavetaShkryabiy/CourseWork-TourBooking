@@ -1,40 +1,44 @@
 package ru.netology.booking.checkSQL;
 
-import static io.restassured.RestAssured.given;
+import lombok.*;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+
+import java.sql.DriverManager;
 
 public class Check {
-    public Check(){}
+    public Check() {
+    }
+
+    static final String DB_URL = "jdbc:mysql://localhost:3306/booking";
+    static final String USER = "user";
+    static final String PASS = "pass";
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public static class StatusResponse {
+        private String status;
+    }
+
+    @SneakyThrows
     public void checkAllOk() {
-        given()
-                .baseUri("http://185.119.57.197:9999")
-                .when()
-                .get("/payment")
-                .then()
-                .statusCode(200)
-                .statusLine("APPROVED")
-        ;
+        var runner = new QueryRunner();
+        var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+           var statusCheck=runner.query(conn, status, new BeanHandler<>(StatusResponse.class));
+            statusCheck.getStatus().equals("APPROVED");
+        }
     }
 
+    @SneakyThrows
     public void checkCardDeclined() {
-        given()
-                .baseUri("http://185.119.57.197:9999")
-                .when()
-                .get("/payment")
-                .then()
-                .statusCode(200)
-                .statusLine("DECLINED")
-        ;
+        var runner = new QueryRunner();
+        var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            var statusCheck=runner.query(conn, status, new BeanHandler<>(StatusResponse.class));
+            statusCheck.getStatus().equals("DECLINED");
+        }
     }
-
-    public void checkInvalidCard() {
-        given()
-                .baseUri("http://185.119.57.197:9999")
-                .when()
-                .get("/payment")
-                .then()
-                .statusCode(500)
-        ;
-    }
-
 
 }
