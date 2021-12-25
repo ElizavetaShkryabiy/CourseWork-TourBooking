@@ -21,4 +21,4 @@
 
 ![img.png](img.png)
 
-[Отчет о тестировании]()
+[Отчет о тестировании](https://github.com/ElizavetaShkryabiy/CourseWork-TourBooking/blob/master/Test%20results%20-%20BookingTest.html)
