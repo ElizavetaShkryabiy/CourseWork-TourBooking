@@ -1,320 +1,297 @@
 package ru.netology.booking.Test;
 
-import com.github.javafaker.Faker;
 import lombok.var;
 import org.junit.jupiter.api.Test;
-import ru.netology.booking.Data.DataHelper;
-import ru.netology.booking.Pages.Dashboard;
-import java.time.LocalDate;
-import java.util.Locale;
+import ru.netology.booking.data.DataHelper;
+import ru.netology.booking.pages.Dashboard;
+
 import static com.codeborne.selenide.Selenide.open;
 
 public class BookingTest {
-
-    Faker faker = new Faker();
-    Faker fakerRu = new Faker(Locale.forLanguageTag("ru"));
-    String previousMonth = String.valueOf(LocalDate.now().minusMonths(1).getMonthValue());
-    String notExistingMonth = String.valueOf(faker.number().numberBetween(13, 100));
-    String pastDateYear = String.valueOf(LocalDate.now().minusYears(1)).substring(2);
-    String thisYear = String.valueOf(LocalDate.now()).substring(2);
-    String farFutureDateYear = String.valueOf(LocalDate.now().plusYears(65).getYear()).substring(2);
-    String randomShortCardNumber = faker.finance().creditCard().substring(0, 14);
-    String randomTooLongCardNumber = faker.number().digits(17);
-    String randomShortCvc = String.valueOf(Integer.parseInt(faker.number().digits(2)));
-    String randomTooLongCvc = String.valueOf(Integer.parseInt(faker.number().digits(4)));
-    String lettersRu = fakerRu.name().fullName();
-    String lettersSymbols = "*^%%#%$^(*&^&^%$%^#";
 
     @Test
     void shouldOrderSuccessfully() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.successfulOrder();
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
+        servicePage.notificationOk();
     }
 
     @Test
     void shouldDeclineOrderForInternalReasons() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.declinedOrder();
+        DataHelper.CardInfo info = DataHelper.getDeclinedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
+        servicePage.notificationDeclinedOrder();
     }
 
     @Test
     void shouldDeclineOrderForInvalidCardNumber() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidCardNumberOrder(DataHelper.getRandomCard().getCardNumber());
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidCard();
+
     }
 
     @Test
     void shouldGiveErrorForShortCardNumber() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidCardNumberFormat(randomShortCardNumber);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(DataHelper.getShortCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidData();
     }
 
     @Test
     void shouldNotFillCardNumberFieldWithLatinLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getOwner();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(DataHelper.getLatLetters(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillCardNumberFieldWithRussianLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(lettersRu, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(DataHelper.getRuLetters(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillCardNumberFieldWithSymbols() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(lettersSymbols, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(DataHelper.getSymbols(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldGiveErrorForEmptyCardNumberField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = "";
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order("", info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldDeclineOrderForTooLongCardNumberNotBeingVerified() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidCardNumberOrder(randomTooLongCardNumber);
+        DataHelper.CardInfo info = DataHelper.getRandomCard();
+        servicePage.order(DataHelper.getTooLongCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidCard();
     }
 
     @Test
     void shouldDeclineOrderForInvalidDateMonthInPast() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidDateCardInfo(previousMonth, thisYear);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        DataHelper.Date date = DataHelper.getDateInRecentPast();
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidDate();
     }
 
     @Test
     void shouldDeclineOrderForInvalidDateYearInPast() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.overdueCardDate(pastDateYear);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        DataHelper.Date date = DataHelper.getDateInAncientPast();
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationOverdueCardDate();
     }
 
     @Test
     void shouldDeclineOrderForInvalidDateYearInTooFarFuture() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.inValidDateCardInfo(month, farFutureDateYear);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        DataHelper.Date date = DataHelper.getDateInFuture();
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidDate();
     }
 
     @Test
-    void shouldDeclineOrderForInvalidDateDueToTooLongFormatOfMonth() {
+    void shouldNotDeclineOrderForTooLongFormatOfMonthDueToCut() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.inValidDateCardInfo(randomShortCardNumber, year);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        DataHelper.Date date = DataHelper.getTooLongDate();
+        servicePage.order(info.getCardNumber(), date.getMonth(), info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.notificationOk();
     }
 
     @Test
-    void shouldDeclineOrderForInvalidDateDueToTooLongFormatOfYear() {
+    void shouldNotDeclineOrderForTooLongFormatOfYearDueToCut() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.inValidDateCardInfo(month, randomShortCardNumber);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        DataHelper.Date date = DataHelper.getTooLongDate();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), date.getYear(), info.getOwner(),info.getCvc());
+        servicePage.notificationOk();
     }
 
     @Test
     void shouldGiveErrorForZerosInYear() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.overdueCardDate("00");
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), "00", info.getOwner(),info.getCvc());
+        servicePage.notificationOverdueCardDate();
     }
 
     @Test
     void shouldGiveErrorForNotExistingMonth() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.inValidDateCardInfo(notExistingMonth, year);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), DataHelper.getNotExistingMonth(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidData();
     }
 
     @Test
     void shouldGiveErrorForZerosInMonth() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.inValidDateCardInfo("00", year);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), "00", info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.notificationInvalidData();
     }
 
     @Test
     void shouldNotFillYearWithLatinLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.emptyField(number, month, DataHelper.getRandomCard().getOwner(), owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getLatLetters(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillMonthWithLatinLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.emptyField(number, DataHelper.getRandomCard().getOwner(), year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), DataHelper.getLatLetters(),info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillYearWithRussianLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.emptyField(number, month, lettersRu, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getRuLetters(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillMonthWithRussianLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.emptyField(number, lettersRu, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), DataHelper.getRuLetters(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillYearWithSymbols() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.emptyField(number, month, lettersSymbols, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getSymbols(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillMonthWithSymbols() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        var year = DataHelper.getRandomCard().getDateYear();
-        servicePage.emptyField(number, lettersSymbols, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), DataHelper.getSymbols(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldGiveErrorForEmptyMonthField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = "";
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), "", info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldGiveErrorForEmptyYearField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        String year = "";
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), "", info.getOwner(),info.getCvc());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldGiveErrorForShortCVC() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidCVCFormat(randomShortCvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getShortCVC());
+        servicePage.notificationInvalidData();
     }
 
     @Test
     void shouldNotFillCVCWithTooLongNumber() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.longCVC(randomTooLongCvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getTooLongCVC());
+        servicePage.notificationOk();
     }
 
     @Test
     void shouldNotFillCVCWithLatinLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var number = DataHelper.getApprovedCardInfo().getCardNumber();
-        var owner = DataHelper.getRandomCard().getOwner();
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        String month = String.valueOf(DataHelper.getRandomCard().getDateMonth());
-        servicePage.emptyField(number, month, year, owner, DataHelper.getRandomCard().getOwner());
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getLatLetters());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillCVCWithRussianLetters() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        servicePage.emptyField(number, month, year, owner, lettersRu);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getRuLetters());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldNotFillCVCWithSymbols() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        servicePage.emptyField(number, month, year, owner, lettersSymbols);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getSymbols());
+        servicePage.emptyFieldNotification();
     }
 
     @Test
     void shouldGiveErrorForEmptyCVCField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = DataHelper.getRandomCard().getOwner();
-        String cvc = "";
-        servicePage.emptyField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),"");
+        servicePage.emptyFieldNotification();
     }
 
 
@@ -322,34 +299,36 @@ public class BookingTest {
     void shouldNotGiveErrorForEmptyOwnerField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        String number = DataHelper.getApprovedCardInfo().getCardNumber();
-        String month = String.valueOf(DataHelper.getApprovedCardInfo().getDateMonth());
-        var year = DataHelper.getApprovedCardInfo().getDateYear();
-        var owner = "";
-        String cvc = String.valueOf(DataHelper.getRandomCard().getCvc());
-        servicePage.emptyOwnerField(number, month, year, owner, cvc);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), "",info.getCvc());
+        servicePage.emptyOwnerFieldNotification();
     }
 
     @Test
     void shouldOrderSuccessfullyWithNumbersInOwner() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        var owner = DataHelper.getApprovedCardInfo().getCardNumber();
-        servicePage.validOwnerFormat(owner);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getCardNumber(), info.getCvc());
+        servicePage.notificationOk();
     }
 
     @Test
     void shouldGiveErrorWhenSymbolsInOwner() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidOwnerFormat(lettersSymbols);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getSymbols(),info.getCvc());
+        servicePage.notificationInvalidData();
     }
 
     @Test
     void shouldGiveErrorWhenRussianLettersInOwner() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
-        servicePage.inValidOwnerFormat(lettersRu);
+        DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getRuLetters(),info.getCvc());
+        servicePage.notificationInvalidData();
     }
 
 }
