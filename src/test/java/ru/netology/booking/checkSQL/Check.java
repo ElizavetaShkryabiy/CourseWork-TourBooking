@@ -6,7 +6,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.sql.DriverManager;
 
-public class Check {
+public final class Check {
     public Check() {
     }
 
@@ -22,7 +22,7 @@ public class Check {
     }
 
     @SneakyThrows
-    public void checkAllOk() {
+    public static void checkAllOk() {
         var runner = new QueryRunner();
         var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
@@ -32,7 +32,7 @@ public class Check {
     }
 
     @SneakyThrows
-    public void checkCardDeclined() {
+    public static void checkCardDeclined() {
         var runner = new QueryRunner();
         var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {

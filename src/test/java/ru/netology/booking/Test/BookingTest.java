@@ -1,7 +1,7 @@
 package ru.netology.booking.Test;
 
-import lombok.var;
 import org.junit.jupiter.api.Test;
+import ru.netology.booking.checkSQL.Check;
 import ru.netology.booking.data.DataHelper;
 import ru.netology.booking.pages.Dashboard;
 
@@ -16,6 +16,7 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
+        Check.checkAllOk();
     }
 
     @Test
@@ -25,6 +26,7 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getDeclinedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationDeclinedOrder();
+        Check.checkCardDeclined();
     }
 
     @Test
@@ -129,6 +131,7 @@ public class BookingTest {
         DataHelper.Date date = DataHelper.getTooLongDate();
         servicePage.order(info.getCardNumber(), date.getMonth(), info.getDateYear(),info.getOwner(),info.getCvc());
         servicePage.notificationOk();
+        Check.checkAllOk();
     }
 
     @Test
@@ -139,6 +142,7 @@ public class BookingTest {
         DataHelper.Date date = DataHelper.getTooLongDate();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), date.getYear(), info.getOwner(),info.getCvc());
         servicePage.notificationOk();
+        Check.checkAllOk();
     }
 
     @Test
@@ -256,6 +260,7 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getTooLongCVC());
         servicePage.notificationOk();
+        Check.checkAllOk();
     }
 
     @Test
@@ -311,6 +316,7 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getCardNumber(), info.getCvc());
         servicePage.notificationOk();
+        Check.checkAllOk();
     }
 
     @Test
