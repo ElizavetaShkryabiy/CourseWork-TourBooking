@@ -24,4 +24,6 @@
 ![img.png](img_1.png)
 
 [Подробные отчеты о тестировании](documentation/reportFiles)
-[Красткий отчет о тестировании](documentation/shortReportPhoto.md)
+
+
+[Краткий отчет о тестировании](documentation/shortReportPhoto.md)
