@@ -23,7 +23,6 @@
 
 ![img.png](img_1.png)
 
-[Подробные отчеты о тестировании](documentation/reportFiles)
 
-
-[Краткий отчет о тестировании](documentation/shortReportPhoto.md)
+* [Подробные отчеты о тестировании](documentation/reportFiles)
+* [Краткий отчет о тестировании](documentation/shortReportPhoto.md)
