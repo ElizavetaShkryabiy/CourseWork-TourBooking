@@ -14,15 +14,17 @@ import static com.codeborne.selenide.Selenide.$$;
 public class BankServicePage {
     SelenideElement form = $(".form");
     private SelenideElement cardNumberField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder","0000 0000 0000 0000"));
+            .findBy(Condition.attribute("placeholder", "0000 0000 0000 0000"));
     private SelenideElement dateMonthField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder","08"));
+            .findBy(Condition.attribute("placeholder", "08"));
     private SelenideElement dateYearField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder","22"));
+            .findBy(Condition.attribute("placeholder", "22"));
     private SelenideElement ownerField = $(byText("Владелец")).parent().$("input");
     private SelenideElement cvcField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder","999"));
+            .findBy(Condition.attribute("placeholder", "999"));
     private SelenideElement orderButton = $$(".button").findBy(Condition.exactText("Продолжить"));
+    private SelenideElement notification = $(".notification").shouldBe(appear, Duration.ofSeconds(20));
+    private SelenideElement errorLine = $(".input__sub").shouldBe(appear, Duration.ofSeconds(10));
 
 
     public void order(String number, String month, String year, String ownerName, String cvcCode) {
@@ -35,49 +37,73 @@ public class BankServicePage {
     }
 
     public void notificationOk() {
-        $(".notification").shouldBe(appear, Duration.ofSeconds(20))
-                .shouldHave(text("Операция одобрена банком"));
+        notification.shouldHave(text("Операция одобрена банком"));
     }
 
 
     public void notificationDeclinedOrder() {
-        $(".notification").shouldBe(appear, Duration.ofSeconds(30))
+        notification
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
     }
 
     public void notificationInvalidCard() {
-        $(".notification").shouldBe(appear, Duration.ofSeconds(30))
+        notification
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
     }
 
-    public void notificationInvalidData() {
-        $(".input__sub").shouldBe(appear, Duration.ofSeconds(10))
-                .shouldHave(text("Неверный формат"));
+    public void notificationInvalidDataInCardNumberField() {
+        errorLine.shouldHave(text("Неверный формат"));
+    }
+
+    public void notificationInvalidDataInMonthField() {
+        errorLine.shouldHave(text("Неверный формат"));
+    }
+
+    public void notificationInvalidDataInCVCField() {
+        errorLine.shouldHave(text("Неверный формат"));
+    }
+
+    public void notificationInvalidDataInOwnerField() {
+        errorLine.shouldHave(text("Неверный формат"));
     }
 
 
     public void notificationInvalidDate() {
-        $(".input__sub").shouldBe(appear, Duration.ofSeconds(10))
-                .shouldHave(text("Неверно указан срок действия карты"));
+        errorLine.shouldHave(text("Неверно указан срок действия карты"));
 
     }
 
     public void notificationOverdueCardDate() {
-        $(".input__sub").shouldBe(appear, Duration.ofSeconds(10))
-                .shouldHave(text("Истёк срок действия карты"));
+        errorLine.shouldHave(text("Истёк срок действия карты"));
     }
 
 
-    public void emptyFieldNotification() {
-        $(".input__sub").shouldBe(appear, Duration.ofSeconds(10))
-                .shouldHave(text("Поле обязательно для заполнения"));
+    public void emptyCardNumberFieldNotification() {
+        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+
+    }
+
+    public void emptyMonthFieldNotification() {
+        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+
+    }
+
+    public void emptyYearFieldNotification() {
+        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+
+    }
+
+    public void emptyCVCFieldNotification() {
+        errorLine.shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyOwnerFieldNotification() {
-        $(".input__sub").shouldBe(appear, Duration.ofSeconds(10))
+        errorLine.shouldBe(appear, Duration.ofSeconds(10))
                 .shouldNotHave(text("Поле обязательно для заполнения"));
     }
+
+
 }
