@@ -30,9 +30,9 @@ public class DataHelper {
 
     public static CardInfo getRandomCard() {
         Faker faker = new Faker();
-        var correctDateMonth = String.valueOf(LocalDate.now().getMonthValue());
+        var correctDateMonth = String.valueOf(faker.number().numberBetween(10, 12));
         String correctDateYear = String.valueOf(LocalDate.now().plusYears(2).getYear()).substring(2);
-        String randomCardNumber = faker.finance().creditCard();
+        String randomCardNumber = faker.numerify("################");
         var randomCvc = faker.numerify("###");
         String ownerLat = faker.name().fullName().toUpperCase(Locale.forLanguageTag("eng"));
         return new CardInfo(randomCardNumber, correctDateMonth, correctDateYear, ownerLat, randomCvc);

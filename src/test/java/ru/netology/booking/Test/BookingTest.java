@@ -30,13 +30,11 @@ public class BookingTest {
     }
 
     @Test
-
-
     void shouldDeclineOrderForInvalidCardNumber() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidCard();
 
     }
@@ -46,7 +44,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(DataHelper.getShortCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(DataHelper.getShortCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidDataInCardNumberField();
     }
 
@@ -55,7 +53,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(DataHelper.getLatLetters(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(DataHelper.getLatLetters(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyCardNumberFieldNotification();
     }
 
@@ -64,7 +62,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(DataHelper.getRuLetters(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(DataHelper.getRuLetters(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyCardNumberFieldNotification();
     }
 
@@ -73,7 +71,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(DataHelper.getSymbols(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(DataHelper.getSymbols(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyCardNumberFieldNotification();
     }
 
@@ -82,7 +80,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order("", info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order("", info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyCardNumberFieldNotification();
     }
 
@@ -91,7 +89,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getRandomCard();
-        servicePage.order(DataHelper.getTooLongCardNumber(), info.getDateMonth(),info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(DataHelper.getTooLongCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidCard();
     }
 
@@ -101,7 +99,7 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         DataHelper.Date date = DataHelper.getDateInRecentPast();
-        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidDate();
     }
 
@@ -111,7 +109,7 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         DataHelper.Date date = DataHelper.getDateInAncientPast();
-        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOverdueCardDate();
     }
 
@@ -121,7 +119,7 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         DataHelper.Date date = DataHelper.getDateInFuture();
-        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(),info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), date.getMonth(), date.getYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidDate();
     }
 
@@ -131,7 +129,7 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         DataHelper.Date date = DataHelper.getTooLongDate();
-        servicePage.order(info.getCardNumber(), date.getMonth(), info.getDateYear(),info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), date.getMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
         Check.checkAllOk();
     }
@@ -142,7 +140,7 @@ public class BookingTest {
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         DataHelper.Date date = DataHelper.getTooLongDate();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), date.getYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), date.getYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
         Check.checkAllOk();
     }
@@ -152,7 +150,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), "00", info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), "00", info.getOwner(), info.getCvc());
         servicePage.notificationOverdueCardDate();
     }
 
@@ -161,7 +159,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), DataHelper.getNotExistingMonth(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), DataHelper.getNotExistingMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidDataInMonthField();
     }
 
@@ -170,7 +168,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), "00", info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), "00", info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationInvalidDataInMonthField();
     }
 
@@ -179,7 +177,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getLatLetters(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getLatLetters(), info.getOwner(), info.getCvc());
         servicePage.emptyYearFieldNotification();
     }
 
@@ -188,7 +186,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), DataHelper.getLatLetters(),info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), DataHelper.getLatLetters(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyMonthFieldNotification();
     }
 
@@ -197,7 +195,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getRuLetters(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getRuLetters(), info.getOwner(), info.getCvc());
         servicePage.emptyYearFieldNotification();
     }
 
@@ -206,7 +204,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), DataHelper.getRuLetters(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), DataHelper.getRuLetters(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyMonthFieldNotification();
     }
 
@@ -215,7 +213,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getSymbols(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), DataHelper.getSymbols(), info.getOwner(), info.getCvc());
         servicePage.emptyYearFieldNotification();
     }
 
@@ -224,7 +222,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), DataHelper.getSymbols(), info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), DataHelper.getSymbols(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyMonthFieldNotification();
     }
 
@@ -233,7 +231,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), "", info.getDateYear(), info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), "", info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.emptyMonthFieldNotification();
     }
 
@@ -242,7 +240,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), "", info.getOwner(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), "", info.getOwner(), info.getCvc());
         servicePage.emptyYearFieldNotification();
     }
 
@@ -251,7 +249,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getShortCVC());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getShortCVC());
         servicePage.notificationInvalidDataInCVCField();
     }
 
@@ -260,7 +258,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getTooLongCVC());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getTooLongCVC());
         servicePage.notificationOk();
         Check.checkAllOk();
     }
@@ -270,7 +268,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getLatLetters());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getLatLetters());
         servicePage.emptyCVCFieldNotification();
     }
 
@@ -279,7 +277,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getRuLetters());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getRuLetters());
         servicePage.emptyCVCFieldNotification();
     }
 
@@ -288,7 +286,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),DataHelper.getSymbols());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getSymbols());
         servicePage.emptyCVCFieldNotification();
     }
 
@@ -297,7 +295,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(),"");
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), "");
         servicePage.emptyCVCFieldNotification();
     }
 
@@ -307,7 +305,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), "",info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), "", info.getCvc());
         servicePage.emptyOwnerFieldNotification();
     }
 
@@ -326,7 +324,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getSymbols(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getSymbols(), info.getCvc());
         servicePage.notificationInvalidDataInOwnerField();
     }
 
@@ -335,7 +333,7 @@ public class BookingTest {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
-        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getRuLetters(),info.getCvc());
+        servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), DataHelper.getRuLetters(), info.getCvc());
         servicePage.notificationInvalidDataInOwnerField();
     }
 

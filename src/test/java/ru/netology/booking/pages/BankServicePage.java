@@ -23,8 +23,7 @@ public class BankServicePage {
     private SelenideElement cvcField = form.$$(".input__control")
             .findBy(Condition.attribute("placeholder", "999"));
     private SelenideElement orderButton = $$(".button").findBy(Condition.exactText("Продолжить"));
-    private SelenideElement notification = $(".notification").shouldBe(appear, Duration.ofSeconds(20));
-    private SelenideElement errorLine = $(".input__sub").shouldBe(appear, Duration.ofSeconds(10));
+    private SelenideElement errorLine = $(".input__sub");
 
 
     public void order(String number, String month, String year, String ownerName, String cvcCode) {
@@ -37,66 +36,67 @@ public class BankServicePage {
     }
 
     public void notificationOk() {
-        notification.shouldHave(text("Операция одобрена банком"));
+        $(".notification").shouldBe(appear, Duration.ofSeconds(20)).shouldHave(text("Операция одобрена банком"));
     }
 
 
     public void notificationDeclinedOrder() {
-        notification
+        $(".notification").shouldBe(appear, Duration.ofSeconds(20))
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
     }
 
     public void notificationInvalidCard() {
-        notification
+        $(".notification").shouldBe(appear, Duration.ofSeconds(20))
                 .shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldNotHave(text("Операция одобрена банком"));
     }
 
     public void notificationInvalidDataInCardNumberField() {
-        errorLine.shouldHave(text("Неверный формат"));
+        errorLine
+        .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
     public void notificationInvalidDataInMonthField() {
-        errorLine.shouldHave(text("Неверный формат"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
     }
 
     public void notificationInvalidDataInCVCField() {
-        errorLine.shouldHave(text("Неверный формат"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
     public void notificationInvalidDataInOwnerField() {
-        errorLine.shouldHave(text("Неверный формат"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
 
     public void notificationInvalidDate() {
-        errorLine.shouldHave(text("Неверно указан срок действия карты"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
 
     }
 
     public void notificationOverdueCardDate() {
-        errorLine.shouldHave(text("Истёк срок действия карты"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Истёк срок действия карты"));
     }
 
 
     public void emptyCardNumberFieldNotification() {
-        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyMonthFieldNotification() {
-        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyYearFieldNotification() {
-        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyCVCFieldNotification() {
-        errorLine.shouldHave(text("Поле обязательно для заполнения"));
+        errorLine.shouldBe(appear, Duration.ofSeconds(10)) .shouldHave(text("Поле обязательно для заполнения"));
 
     }
 

@@ -33,5 +33,5 @@ Docker Desktop, Git, браузер Google Chrome, приложение для �
 * [План автоматизации](documentation/Plan.md)
 
 * [Отчет о тестировании](documentation/Report.md)
-* [Test Results - BookingTest.html](https://github.com/ElizavetaShkryabiy/CourseWork-TourBooking/blob/master/documentation/Test%20Results%20-%20BookingTest.html)
+* [Отчеты о тестировании](documentation/reportFiles)
 * [Отчет по итогам автоматизации](documentation/Summary.md)
