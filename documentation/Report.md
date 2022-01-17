@@ -24,7 +24,7 @@
 ![img_1.png](img_1.png)
 
 
-* [Подробные отчеты о тестировании находятся в папке reportFiles в разделе documentation](documentation/reportFiles)
+* [Подробные отчеты о тестировании находятся в папке reportFiles в разделе documentation](https://github.com/ElizavetaShkryabiy/CourseWork-TourBooking/tree/master/documentation/reportFiles)
 
 
 <h3>Краткий отчет о тестировании:</h3>
