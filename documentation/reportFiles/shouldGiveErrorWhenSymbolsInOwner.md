@@ -15,7 +15,7 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {"
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 	at com.sun.proxy.$Proxy12.shouldBe(Unknown Source)
 	at ru.netology.booking.pages.BankServicePage.notificationInvalidDataInOwnerField(BankServicePage.java:69)
-	at ru.netology.booking.Test.BookingTest.shouldGiveErrorWhenSymbolsInOwner(BookingTest.java:328)
+	at ru.netology.booking.test.BookingTest.shouldGiveErrorWhenSymbolsInOwner(BookingTest.java:328)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

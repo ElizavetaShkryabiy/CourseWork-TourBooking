@@ -1,4 +1,5 @@
-package ru.netology.booking.Test;
+package ru.netology.booking.test;
+
 
 import org.junit.jupiter.api.Test;
 import ru.netology.booking.checkSQL.Check;
@@ -6,6 +7,7 @@ import ru.netology.booking.data.DataHelper;
 import ru.netology.booking.pages.Dashboard;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BookingTest {
 
@@ -16,7 +18,8 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
-        Check.checkAllOk();
+        var status = Check.checkStatus();
+        assertEquals("APPROVED", status);
     }
 
     @Test
@@ -26,7 +29,8 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getDeclinedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationDeclinedOrder();
-        Check.checkCardDeclined();
+        var status = Check.checkStatus();
+        assertEquals("DECLINED", status);
     }
 
     @Test
@@ -131,7 +135,8 @@ public class BookingTest {
         DataHelper.Date date = DataHelper.getTooLongDate();
         servicePage.order(info.getCardNumber(), date.getMonth(), info.getDateYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
-        Check.checkAllOk();
+        var status = Check.checkStatus();
+        assertEquals("APPROVED", status);
     }
 
     @Test
@@ -142,7 +147,8 @@ public class BookingTest {
         DataHelper.Date date = DataHelper.getTooLongDate();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), date.getYear(), info.getOwner(), info.getCvc());
         servicePage.notificationOk();
-        Check.checkAllOk();
+        var status = Check.checkStatus();
+        assertEquals("APPROVED", status);
     }
 
     @Test
@@ -260,7 +266,8 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getOwner(), DataHelper.getTooLongCVC());
         servicePage.notificationOk();
-        Check.checkAllOk();
+        var status = Check.checkStatus();
+        assertEquals("APPROVED", status);
     }
 
     @Test
@@ -301,7 +308,7 @@ public class BookingTest {
 
 
     @Test
-    void shouldNotGiveErrorForEmptyOwnerField() {
+    void shouldGiveErrorForEmptyOwnerField() {
         var choosePage = open("http://localhost:8080", Dashboard.class);
         var servicePage = choosePage.depositClick();
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
@@ -316,7 +323,8 @@ public class BookingTest {
         DataHelper.CardInfo info = DataHelper.getApprovedCardInfo();
         servicePage.order(info.getCardNumber(), info.getDateMonth(), info.getDateYear(), info.getCardNumber(), info.getCvc());
         servicePage.notificationOk();
-        Check.checkAllOk();
+        var status = Check.checkStatus();
+        assertEquals("APPROVED", status);
     }
 
     @Test

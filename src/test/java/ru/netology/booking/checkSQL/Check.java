@@ -22,22 +22,12 @@ public final class Check {
     }
 
     @SneakyThrows
-    public static void checkAllOk() {
+    public static String checkStatus() {
         var runner = new QueryRunner();
         var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
            var statusCheck=runner.query(conn, status, new BeanHandler<>(StatusResponse.class));
-            statusCheck.getStatus().equals("APPROVED");
-        }
-    }
-
-    @SneakyThrows
-    public static void checkCardDeclined() {
-        var runner = new QueryRunner();
-        var status = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
-        try (var conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            var statusCheck=runner.query(conn, status, new BeanHandler<>(StatusResponse.class));
-            statusCheck.getStatus().equals("DECLINED");
+            return statusCheck.getStatus();
         }
     }
 

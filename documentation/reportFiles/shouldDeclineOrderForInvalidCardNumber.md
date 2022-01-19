@@ -13,7 +13,7 @@ Timeout: 4 s.
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 	at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
 	at ru.netology.booking.pages.BankServicePage.notificationInvalidCard(BankServicePage.java:51)
-	at ru.netology.booking.Test.BookingTest.shouldDeclineOrderForInvalidCardNumber(BookingTest.java:38)
+	at ru.netology.booking.test.BookingTest.shouldDeclineOrderForInvalidCardNumber(BookingTest.java:38)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

@@ -13,7 +13,7 @@ at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideEle
 at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
 at ru.netology.booking.pages.BankServicePage.notificationDeclinedOrder(BankServicePage.java:45)
-at ru.netology.booking.Test.BookingTest.shouldDeclineOrderForInternalReasons(BookingTest.java:28)
+at ru.netology.booking.test.BookingTest.shouldDeclineOrderForInternalReasons(BookingTest.java:28)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

@@ -12,18 +12,12 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class BankServicePage {
-    SelenideElement form = $(".form");
-    private SelenideElement cardNumberField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder", "0000 0000 0000 0000"));
-    private SelenideElement dateMonthField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder", "08"));
-    private SelenideElement dateYearField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder", "22"));
+    private SelenideElement cardNumberField = $("[placeholder = '0000 0000 0000 0000']");
+    private SelenideElement dateMonthField = $("[placeholder = '08']");
+    private SelenideElement dateYearField = $("[placeholder = '22']");
     private SelenideElement ownerField = $(byText("Владелец")).parent().$("input");
-    private SelenideElement cvcField = form.$$(".input__control")
-            .findBy(Condition.attribute("placeholder", "999"));
+    private SelenideElement cvcField = $("[placeholder = '999']");
     private SelenideElement orderButton = $$(".button").findBy(Condition.exactText("Продолжить"));
-    private SelenideElement errorLine = $(".input__sub");
 
 
     public void order(String number, String month, String year, String ownerName, String cvcCode) {
@@ -53,56 +47,76 @@ public class BankServicePage {
     }
 
     public void notificationInvalidDataInCardNumberField() {
-        errorLine
-        .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
+        $("[placeholder='0000 0000 0000 0000']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
     public void notificationInvalidDataInMonthField() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
+        $("[placeholder='08']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
     }
 
     public void notificationInvalidDataInCVCField() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
+        $("[placeholder='999']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
     public void notificationInvalidDataInOwnerField() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
+        $(byText("Владелец")).parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверный формат"));
     }
 
 
     public void notificationInvalidDate() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
+        $("[placeholder='08']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Неверно указан срок действия карты"));
 
     }
 
     public void notificationOverdueCardDate() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Истёк срок действия карты"));
+        $("[placeholder='22']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Истёк срок действия карты"));
     }
 
 
     public void emptyCardNumberFieldNotification() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
+        $("[placeholder='0000 0000 0000 0000']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyMonthFieldNotification() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
+        $("[placeholder='08']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyYearFieldNotification() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
+        $("[placeholder='22']")
+                .parent().parent().$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyCVCFieldNotification() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10)) .shouldHave(text("Поле обязательно для заполнения"));
+        $("[placeholder='999']")
+                .parent().parent().$(".input__sub")
+        .shouldBe(appear, Duration.ofSeconds(10)).shouldHave(text("Поле обязательно для заполнения"));
 
     }
 
     public void emptyOwnerFieldNotification() {
-        errorLine.shouldBe(appear, Duration.ofSeconds(10))
-                .shouldNotHave(text("Поле обязательно для заполнения"));
+        $(byText("Владелец")).parent()
+                .$(".input__sub")
+                .shouldBe(appear, Duration.ofSeconds(10))
+                .shouldHave(text("Поле обязательно для заполнения"));
     }
 
 

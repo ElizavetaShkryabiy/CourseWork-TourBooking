@@ -1,8 +1,8 @@
 ``` 
-Element should have text 'Поле обязательно для заполнения' {.input__sub}
+Element should have text 'Поле обязательно для заполнения' {[placeholder='999']/By.xpath: ../By.xpath: ../.input__sub}
 Element: '<span class="input__sub">Неверный формат</span>'
-Screenshot: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642437376227.17.png
-Page source: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642437376227.17.html
+Screenshot: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642598279872.8.png
+Page source: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642598279872.8.html
 Timeout: 4 s.
 	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
 	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
@@ -11,8 +11,8 @@ Timeout: 4 s.
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 	at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
-	at ru.netology.booking.pages.BankServicePage.emptyYearFieldNotification(BankServicePage.java:94)
-	at ru.netology.booking.test.BookingTest.shouldNotFillYearWithLatinLetters(BookingTest.java:181)
+	at ru.netology.booking.pages.BankServicePage.emptyCVCFieldNotification(BankServicePage.java:111)
+	at ru.netology.booking.test.BookingTest.shouldNotFillCVCWithRussianLetters(BookingTest.java:288)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -103,4 +103,5 @@ Timeout: 4 s.
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:829)
+
 ```

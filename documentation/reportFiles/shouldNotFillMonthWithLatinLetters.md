@@ -12,7 +12,7 @@ at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideEle
 at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
 at ru.netology.booking.pages.BankServicePage.emptyMonthFieldNotification(BankServicePage.java:89)
-at ru.netology.booking.Test.BookingTest.shouldNotFillMonthWithLatinLetters(BookingTest.java:190)
+at ru.netology.booking.test.BookingTest.shouldNotFillMonthWithLatinLetters(BookingTest.java:190)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

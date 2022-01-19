@@ -12,7 +12,7 @@ Timeout: 4 s.
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
 	at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
 	at ru.netology.booking.pages.BankServicePage.emptyYearFieldNotification(BankServicePage.java:94)
-	at ru.netology.booking.Test.BookingTest.shouldNotFillYearWithRussianLetters(BookingTest.java:199)
+	at ru.netology.booking.test.BookingTest.shouldNotFillYearWithRussianLetters(BookingTest.java:199)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

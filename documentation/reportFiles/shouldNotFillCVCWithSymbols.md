@@ -1,18 +1,18 @@
-``` 
-Element should not have text 'Поле обязательно для заполнения' {.input__sub}
-Element: '<span class="input__sub">Поле обязательно для заполнения</span>'
-Screenshot: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642437265711.5.png
-Page source: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642437265711.5.html
+```  
+Element should have text 'Поле обязательно для заполнения' {[placeholder='999']/By.xpath: ../By.xpath: ../.input__sub}
+Element: '<span class="input__sub">Неверный формат</span>'
+Screenshot: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642598192715.0.png
+Page source: file:/C:/IDEA/HW/Java/Autom/courseWork/build/reports/tests/1642598192715.0.html
 Timeout: 4 s.
-	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:118)
-	at com.codeborne.selenide.commands.ShouldNot.execute(ShouldNot.java:30)
-	at com.codeborne.selenide.commands.ShouldNot.execute(ShouldNot.java:14)
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:14)
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy12.shouldNotHave(Unknown Source)
-	at ru.netology.booking.pages.BankServicePage.emptyOwnerFieldNotification(BankServicePage.java:105)
-	at ru.netology.booking.Test.BookingTest.shouldNotGiveErrorForEmptyOwnerField(BookingTest.java:309)
+	at com.sun.proxy.$Proxy12.shouldHave(Unknown Source)
+	at ru.netology.booking.pages.BankServicePage.emptyCVCFieldNotification(BankServicePage.java:111)
+	at ru.netology.booking.test.BookingTest.shouldNotFillCVCWithSymbols(BookingTest.java:297)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -103,4 +103,5 @@ Timeout: 4 s.
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:829)
+
 ```
